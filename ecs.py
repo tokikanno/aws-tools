@@ -58,7 +58,20 @@ def _ask_for_cluster_task(cluster: str) -> Optional[str]:
     elif len(tasks) == 1:
         return tasks[0]
 
-    return questionary.rawselect("plz select a task", choices=tasks).ask()
+    options: List[str] = [
+        "{} : {}".format(
+            task["taskArn"].split("/")[-1],
+            ", ".join(c["name"] for c in task["containers"]),
+        )
+        for task in _describe_tasks(cluster=cluster, task_arns=tasks)
+    ]
+
+    return (
+        questionary.rawselect("plz select a task", choices=options)
+        .ask()
+        .split(":")[0]
+        .strip()
+    )
 
 
 @app.command()
