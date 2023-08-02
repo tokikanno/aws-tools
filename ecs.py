@@ -117,7 +117,7 @@ def attach_container(
             option: str = "{}/{}".format(c["name"], container_arn)
             options.append(option)
 
-    option = questionary.rawselect("choose task to attach", choices=options).ask()
+    option = questionary.rawselect("choose container to attach", choices=options).ask()
     if not option:
         print("no container selected")
         return
