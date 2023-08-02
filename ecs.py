@@ -165,8 +165,9 @@ def tail_task_log(
         cluster = _ask_for_cluster()
 
     task_arn: str = _ask_for_cluster_task(cluster=cluster)
-    print(f"no task found in cluster {cluster}")
-    return
+    if not task_arn:
+        print(f"no task found in cluster {cluster}")
+        return
 
     task_info_d: dict = _describe_tasks(cluster=cluster, task_arns=[task_arn])[0]
     task_def_arn: str = task_info_d["taskDefinitionArn"]
