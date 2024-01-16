@@ -11,7 +11,7 @@ from pprint import pprint
 
 ecs_client = boto3.client("ecs")
 
-app = typer.Typer()
+app = typer.Typer(no_args_is_help=True)
 
 
 def _list_clusters() -> List[str]:
